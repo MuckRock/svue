@@ -1,22 +1,23 @@
-import { getParamNames } from "./svue";
+import { expect, test } from "vitest";
+import { getParamNames } from "./svue.js";
 
-function add(a, b) { }
+function add(a, b) {}
 
-const sum = (a, b) => { };
+const sum = (a, b) => {};
 
-const shortArrow = a => { };
+const shortArrow = (a) => {};
 
-const shortArrowDeceiving = a => b => a + b;
+const shortArrowDeceiving = (a) => (b) => a + b;
 
-const deceiving = a => a.map(b => async () => { });
+const deceiving = (a) => a.map((b) => async () => {});
 
-const fnShorthand = 'fnName(param1,param2){filter(notParam=>notParam)}';
+const fnShorthand = "fnName(param1,param2){filter(notParam=>notParam)}";
 
-test('param names works', () => {
-  expect(getParamNames(add)).toStrictEqual(['a', 'b']);
-  expect(getParamNames(sum)).toStrictEqual(['a', 'b']);
-  expect(getParamNames(shortArrow)).toStrictEqual(['a']);
-  expect(getParamNames(shortArrowDeceiving)).toStrictEqual(['a']);
-  expect(getParamNames(deceiving)).toStrictEqual(['a']);
-  expect(getParamNames(fnShorthand)).toStrictEqual(['param1', 'param2']);
+test("param names works", () => {
+  expect(getParamNames(add)).toStrictEqual(["a", "b"]);
+  expect(getParamNames(sum)).toStrictEqual(["a", "b"]);
+  expect(getParamNames(shortArrow)).toStrictEqual(["a"]);
+  expect(getParamNames(shortArrowDeceiving)).toStrictEqual(["a"]);
+  expect(getParamNames(deceiving)).toStrictEqual(["a"]);
+  expect(getParamNames(fnShorthand)).toStrictEqual(["param1", "param2"]);
 });

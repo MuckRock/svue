@@ -1,5 +1,5 @@
-import { Svue } from './svue';
-import { tweened } from 'svelte/motion';
+import { Svue } from "./svue.js";
+import { tweened } from "svelte/motion";
 
 export const sv = new Svue({
   data() {
@@ -7,9 +7,9 @@ export const sv = new Svue({
       x: 2,
       y: 3,
       k: 7,
-      name: 'Bob',
-      tweened: tweened(0)
-    }
+      name: "Bob",
+      tweened: tweened(0),
+    };
   },
   computed: {
     a(z, x) {
@@ -19,19 +19,19 @@ export const sv = new Svue({
       return x + y;
     },
     delayed(x, y) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         setTimeout(() => resolve(x + y), 2000);
       });
     },
     greeting(name) {
       return `Hello ${name}!`;
-    }
+    },
   },
   watch: {
     z(newZ) {
-      console.log('Received a new Z value', newZ, 'k is', this.k);
-    }
-  }
+      console.log("Received a new Z value", newZ, "k is", this.k);
+    },
+  },
 });
 
 sv.x = 6;
