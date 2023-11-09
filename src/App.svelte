@@ -1,5 +1,5 @@
 <script>
-  import { sv } from "./example";
+  import { sv } from "./example.js";
 </script>
 
 <h1>{$sv.greeting}</h1>
@@ -9,7 +9,7 @@
   <input type="text" bind:value={$sv.name} />
 </div>
 <div>
-  <button on:click={() => ($sv.name += '!')}>Add exclamation at end</button>
+  <button on:click={() => ($sv.name += "!")}>Add exclamation at end</button>
 </div>
 
 <div>x: {$sv.x}</div>
@@ -27,6 +27,6 @@
 
 <div>Tweened value: {$sv.tweened}</div>
 
-<button on:click={() => $sv.update(tweened => tweened + 20)}>
+<button on:click={() => $sv.update((tweened) => tweened + 20)}>
   Increment by 20
 </button>

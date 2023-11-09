@@ -9,20 +9,20 @@ export const sv = new Svue({
   data() {
     return {
       x: 2,
-      y: 3
-    }
+      y: 3,
+    };
   },
   computed: {
     z(x, y) {
       return x + y;
     },
-  }
+  },
 });
 ```
 
 You can then bring these simple reactive stores into your Svelte components:
 
-```html
+```svelte
 <script>
   import { sv } from "./example.js";
 </script>
@@ -49,31 +49,32 @@ console.log(sv.z); // logs 10
 
 # Installation
 
-Install simply with:
+Install with:
 
-```bash
-npm install svue
+```sh
+npm install https://github.com/MuckRock/svue
 ```
 
 Then in a JavaScript file you can create a new store with:
 
 ```javascript
-import { Svue } from 'svue';
+import { Svue } from "svue";
 
 export const store = new Svue({
   data() {
     return {
-      ...
-    }
+      // ...
+    };
   },
   computed: {
-    ...
-  }
+    // ...
+  },
+});
 ```
 
 And use the store in your Svelte component, using the traditional `$`-prefix:
 
-```html
+```svelte
 <script>
   import {store} from './store.js';
 </script>
@@ -90,7 +91,7 @@ npm install
 npm run dev
 ```
 
-Browse to the files `src/App.svelte` and `src/example.js` in this repository. Navigate your browser to port 8080 and open up the console. Following the code should give an example of how Svue works in practice.
+Browse to the files `src/App.svelte` and `src/example.js` in this repository. Navigate your browser to http://localhost:5173/ and open up the console. Following the code should give an example of how Svue works in practice.
 
 # Guide
 
@@ -107,8 +108,8 @@ const car = new Svue({
       make: "Nissan",
       model: "Rogue",
       year: 2015,
-    }
-  }
+    };
+  },
 });
 ```
 
@@ -123,12 +124,12 @@ const car = new Svue({
       make: "Nissan",
       model: "Rogue",
       year: 2015,
-    }
+    };
   },
   computed: {
     name(make, model) {
       return `${make} ${model}`;
-    }
+    },
   },
 });
 ```
@@ -144,7 +145,7 @@ const car = new Svue({
       make: "Nissan",
       model: "Rogue",
       year: 2015,
-    }
+    };
   },
   computed: {
     nameWithYear(name, year) {
@@ -152,7 +153,7 @@ const car = new Svue({
     },
     name(make, model) {
       return `${make} ${model}`;
-    }
+    },
   },
 });
 ```

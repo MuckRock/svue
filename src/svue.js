@@ -1,19 +1,21 @@
-import { writable, get, derived } from 'svelte/store';
+import { writable, get, derived } from "svelte/store";
 
 // From https://stackoverflow.com/a/9924463
-const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
 const ARGUMENT_NAMES = /([^\s,]+)/g;
 const QUICK_ARROW = /^\s*([a-zA-Z0-9$_]+)\s*=>/;
 export function getParamNames(func) {
-  const fnStr = func.toString().replace(STRIP_COMMENTS, '');
+  const fnStr = func.toString().replace(STRIP_COMMENTS, "");
   const quickMatch = fnStr.match(QUICK_ARROW);
   if (quickMatch != null) return [quickMatch[1]];
 
-  const result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+  const result = fnStr
+    .slice(fnStr.indexOf("(") + 1, fnStr.indexOf(")"))
+    .match(ARGUMENT_NAMES);
   if (result === null) return [];
 
   // Personal additions to handle arrow functions
-  const arrowIdx = result.indexOf('=>');
+  const arrowIdx = result.indexOf("=>");
   if (arrowIdx != -1) return result.slice(0, arrowIdx);
 
   return result;
@@ -34,20 +36,21 @@ export class Svue {
     fn(this);
     const subscribeId = this.subscribeId++;
     this.subscribers[subscribeId] = fn;
-    return () => { // unsubscribe function
+    return () => {
+      // unsubscribe function
       delete this.subscribers[subscribeId];
     };
   }
 
   pingSubscriptions() {
-    Object.keys(this.subscribers).forEach(subscriber => {
+    Object.keys(this.subscribers).forEach((subscriber) => {
       this.subscribers[subscriber](this);
     });
   }
 
   initData(data) {
     const destructured = data();
-    Object.keys(destructured).forEach(key => {
+    Object.keys(destructured).forEach((key) => {
       let w = destructured[key];
       if (w == null || !w.set || !w.subscribe) {
         w = writable(w);
@@ -74,17 +77,20 @@ export class Svue {
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         const args = getParamNames(computed[key]);
-        if (!args.every(arg => this.writables[arg] != null)) continue;
+        if (!args.every((arg) => this.writables[arg] != null)) continue;
         matched = true;
-        const d = derived(args.map(a => this.writables[a]), (args, setFn) => {
-          const result = computed[key].bind(this)(...args);
-          if (result && (typeof result.then) == 'function') {
-            // Operate asynchronously if the function is a promise
-            result.then((x) => setFn(x));
-          } else {
-            setFn(result);
-          }
-        });
+        const d = derived(
+          args.map((a) => this.writables[a]),
+          (args, setFn) => {
+            const result = computed[key].bind(this)(...args);
+            if (result && typeof result.then == "function") {
+              // Operate asynchronously if the function is a promise
+              result.then((x) => setFn(x));
+            } else {
+              setFn(result);
+            }
+          },
+        );
         this.writables[key] = d;
         Object.defineProperty(this, key, {
           get() {
@@ -100,9 +106,11 @@ export class Svue {
   }
 
   initWatch(watch) {
-    Object.keys(watch).forEach(key => {
-      const chain = key.split('.');
-      chain.reduce((x, k) => x.writables[k], this).subscribe(watch[key].bind(this));
+    Object.keys(watch).forEach((key) => {
+      const chain = key.split(".");
+      chain
+        .reduce((x, k) => x.writables[k], this)
+        .subscribe(watch[key].bind(this));
     });
   }
 
