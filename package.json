@@ -4,9 +4,6 @@
   "main": "dist/svue.umd.cjs",
   "module": "dist/svue.js",
   "type": "module",
-  "files": [
-    "dist"
-  ],
   "exports": {
     ".": {
       "import": "./dist/svue.js",
