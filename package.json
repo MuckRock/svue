@@ -1,9 +1,10 @@
 {
-  "name": "svue",
+  "name": "@MuckRock/svue",
   "version": "1.5.3",
   "main": "dist/svue.umd.cjs",
   "module": "dist/svue.js",
   "type": "module",
+  "files": ["dist/"],
   "exports": {
     ".": {
       "import": "./dist/svue.js",
@@ -22,11 +23,12 @@
     "dev": "vite",
     "preview": "vite preview",
     "test": "vitest run",
-    "format": "prettier . -w"
+    "format": "prettier . -w",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/freedmand/svue.git"
+    "url": "https://github.com/MuckRock/svue.git"
   },
   "keywords": [
     "svelte",
