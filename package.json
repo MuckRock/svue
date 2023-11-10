@@ -1,6 +1,6 @@
 {
   "name": "svue",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "main": "dist/svue.umd.cjs",
   "module": "dist/svue.js",
   "type": "module",
